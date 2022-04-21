@@ -57,15 +57,30 @@ const isTitleAlreadyExists = (titleId, titles) => {
   return false;
 };
 
-chrome.contextMenus.onClicked.addListener((link, onclickdata) => {
-  handleTitleStorage(link);
+chrome.contextMenus.onClicked.addListener((link, { id }) => {
+  chrome.scripting.executeScript(
+    {
+      target: { tabId: id },
+      func: removeTopicFromView,
+      args: [link],
+    },
+    () => {}
+  );
+  //handleTitleStorage(link);
 });
 
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  console.log(
-    sender.tab
-      ? "from a content script:" + sender.tab.url
-      : "from the extension"
-  );
-  if (request.greeting === "hello") sendResponse({ farewell: "goodbye" });
-});
+function removeTopicFromView({ linkUrl }) {
+  var topicList = document.getElementsByClassName("topic-list partial")[0];
+  console.log(topicList);
+
+  for (var topic of topicList.children) {
+    var topicAnchor = topic.getElementsByTagName("a")[0];
+    var topicId = topicAnchor.href.substring(
+      topicAnchor.href.indexOf("--") + 2
+    );
+    var topicIdToBeRemoved = linkUrl.substring(linkUrl.indexOf("--") + 2);
+    if (topicId === topicIdToBeRemoved) {
+      topic.remove();
+    }
+  }
+}
