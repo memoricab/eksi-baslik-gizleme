@@ -25,6 +25,7 @@
     "contextMenus"
   ],
   "action": {
+    "default_popup": "popup.html",
     "default_title": "Ekşi Başlık Gizle",
     "default_icon": "icon.png"
   }
