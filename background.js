@@ -14,7 +14,7 @@ chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create(CONTEXT_MENU);
 });
 
-var handleTopicStorage = async ({ linkUrl }) => {
+var handleTopicStorage = async (linkUrl) => {
   var createdTopic = await createNewTopic(linkUrl);
   saveTopic(createdTopic);
 };
@@ -43,13 +43,12 @@ const removeQueryFromTopicUrl = (url) => {
 const saveTopic = async (topic) => {
   var { storedTopics } = await chrome.storage.local.get([STORED_TOPICS]);
   var topics = JSON.parse(storedTopics);
-  topic.push(topic);
+  topics.push(topic);
   storedTopics = JSON.stringify(topics);
   chrome.storage.local.set({ [STORED_TOPICS]: storedTopics });
 };
 
 chrome.contextMenus.onClicked.addListener(({ linkUrl }, { id }) => {
-  console.log(linkUrl);
   chrome.scripting.executeScript(
     {
       target: { tabId: id },
@@ -58,10 +57,10 @@ chrome.contextMenus.onClicked.addListener(({ linkUrl }, { id }) => {
     },
     () => {}
   );
-  //handleTopicStorage(link);
+  handleTopicStorage(linkUrl);
 });
 
-function removeTopicFromView(linkUrl) {
+const removeTopicFromView = (linkUrl) => {
   var topicList = document.getElementsByClassName("topic-list partial")[0];
 
   for (var topic of topicList.children) {
@@ -75,4 +74,4 @@ function removeTopicFromView(linkUrl) {
       topic.remove();
     }
   }
-}
+};
