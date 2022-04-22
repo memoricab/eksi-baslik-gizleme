@@ -48,23 +48,25 @@ const saveTopic = async (topic) => {
   chrome.storage.local.set({ [STORED_TOPICS]: storedTopics });
 };
 
-chrome.contextMenus.onClicked.addListener((link, { id }) => {
+chrome.contextMenus.onClicked.addListener(({ linkUrl }, { id }) => {
+  console.log(linkUrl);
   chrome.scripting.executeScript(
     {
       target: { tabId: id },
       func: removeTopicFromView,
-      args: [link],
+      args: [linkUrl],
     },
     () => {}
   );
   //handleTopicStorage(link);
 });
 
-function removeTopicFromView({ linkUrl }) {
+function removeTopicFromView(linkUrl) {
   var topicList = document.getElementsByClassName("topic-list partial")[0];
 
   for (var topic of topicList.children) {
     var topicAnchor = topic.getElementsByTagName("a")[0];
+    if (topicAnchor === undefined) continue;
     var topicId = topicAnchor.href.substring(
       topicAnchor.href.indexOf("--") + 2
     );
