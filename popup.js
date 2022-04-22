@@ -22,27 +22,27 @@ const initTopics = async () => {
     list.appendChild(row);
   }
 
-  function createTopicAnchor(topic) {
+  const createTopicAnchor = (topic) => {
     var anchor = document.createElement("a");
     anchor.appendChild(document.createTextNode(topic.self));
     anchor.href = topic.url;
     return anchor;
-  }
+  };
 
-  function createACol() {
+  const createACol = () => {
     var col = document.createElement("div");
     col.classList.add("column");
     return col;
-  }
+  };
 
-  function createDeleteBtn() {
+  const createDeleteBtn = () => {
     var deleteBtn = document.createElement("button");
     deleteBtn.innerHTML = "sil";
     deleteBtn.onclick = (e) => deleteTopic(e);
     return deleteBtn;
-  }
+  };
 
-  function deleteTopic(e) {
+  const deleteTopic = (e) => {
     var topicRow = e.srcElement.parentElement.parentElement;
     for (let i = 0; i < topics.length; i++) {
       if (topics[i].id === topicRow.id) {
@@ -51,7 +51,7 @@ const initTopics = async () => {
         chrome.storage.local.set({ storedTopics: JSON.stringify(topics) });
       }
     }
-  }
+  };
 };
 
 initTopics();
