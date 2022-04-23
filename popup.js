@@ -11,9 +11,9 @@ const initTopics = async () => {
     return anchor;
   };
 
-  const createACol = () => {
+  const createACol = (className) => {
     var col = document.createElement("div");
-    col.classList.add("column");
+    col.classList.add(className);
     return col;
   };
 
@@ -39,8 +39,8 @@ const initTopics = async () => {
     var row = document.createElement("div");
     row.id = topic.id;
 
-    var col1 = createACol();
-    var col2 = createACol();
+    var col1 = createACol("topic-column");
+    var col2 = createACol("sil-column");
 
     var anchor = createTopicAnchor(topic);
     col1.appendChild(anchor);
