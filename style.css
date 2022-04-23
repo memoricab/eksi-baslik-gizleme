@@ -7,11 +7,17 @@ h4.eksi-baslik-gizle {
   text-decoration: underline;
 }
 
-.column {
+.topic-column {
   float: left;
-  width: 50%;
+  width: 79%;
   padding: 10px;
 }
+
+.sil-column {
+  float: right;
+  width: 20%;
+  padding: 10px;
+} 
 
 * {
   box-sizing: border-box;
