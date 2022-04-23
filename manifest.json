@@ -20,8 +20,6 @@
     "storage",
     "activeTab",
     "scripting",
-    "activeTab",
-    "clipboardWrite",
     "contextMenus"
   ],
   "action": {
