@@ -1,7 +1,7 @@
 {
   "name": "Eksi Baslik Gizle",
-  "description": "Bu eklenti eksisozluk'de görmek istemediğiniz başlıkları gizler",
-  "version": "1.0",
+  "description": "Bu eklenti eksisozluk'de görmek istemediğiniz başlıkları gizler. Gizlenen başlıkları listeleyip tekrar görmenizi sağlar.",
+  "version": "1.0.0",
   "manifest_version": 3,
   "background": {
     "service_worker": "background.js"
@@ -14,14 +14,11 @@
     }
   ],
   "icons": {
-    "16": "icon.png"
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
   },
-  "permissions": [
-    "storage",
-    "activeTab",
-    "scripting",
-    "contextMenus"
-  ],
+  "permissions": ["storage", "activeTab", "scripting", "contextMenus"],
   "action": {
     "default_popup": "popup.html",
     "default_title": "Ekşi Başlık Gizle",
