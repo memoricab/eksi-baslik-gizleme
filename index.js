@@ -28,3 +28,22 @@ const removeTopicsFromView = async () => {
 };
 
 removeTopicsFromView();
+
+/*
+ * GUNDEM ve BUGUN navbar elementine tıklayınca baslıkları gizle
+ */
+
+var indexNav = document.getElementById("quick-index-nav").children;
+var bugunNav = indexNav[0].children[0];
+var gundemNav = indexNav[1].children[0];
+
+const delay = (time) => {
+  return new Promise((resolve) => setTimeout(resolve, time));
+};
+
+bugunNav.addEventListener("click", () => {
+  delay(500).then(() => removeTopicsFromView());
+});
+gundemNav.addEventListener("click", () => {
+  delay(500).then(() => removeTopicsFromView());
+});
