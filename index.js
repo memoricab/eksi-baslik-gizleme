@@ -1,23 +1,25 @@
-console.log("script has been injected");
+const removeTopicsFromView = async () => {
+  const extracTopicIdFromAnchor = (topicAnchor) => {
+    return topicAnchor.href
+      .substring(topicAnchor.href.indexOf("--") + 2)
+      .split("?")[0];
+  };
 
-// document.addEventListener("contextmenu", function (e) {
-//   if (e.target instanceof HTMLAnchorElement) {
-//     chrome.runtime.sendMessage({ title: e.target.href }, function (response) {
-//       console.log(response.farewell);
-//     });
-//   }
-// });
+  var { storedTopics } = await chrome.storage.local.get("storedTopics");
+  var topics = JSON.parse(storedTopics);
+  var topicUlElement = document.getElementsByClassName("topic-list partial")[0];
+  var topicLiElements = topicUlElement.children;
 
-// console.log("script has been injected");
-// var gizliBaslik = ["are", "world", "you", "how", ""];
+  for (var i = topicLiElements.length - 1; i >= 0; i--) {
+    var topicEl = topicLiElements[i];
+    var topicAnchor = topicEl.getElementsByTagName("a")[0];
+    if (topicAnchor === undefined) continue;
+    var topicElId = extracTopicIdFromAnchor(topicAnchor);
 
-// var baslikList = document.getElementsByClassName("hello")[0];
+    for (var topic of topics) {
+      if (topic.id === topicElId) topicUlElement.removeChild(topicEl);
+    }
+  }
+};
 
-// for (var gizlenen of gizliBaslik) {
-//   var baslikListLength = baslikList.children.length;
-//   for (var i = baslikListLength - 1; i >= 0; i--) {
-//     if (gizlenen === baslikList.children[i].innerHTML) {
-//       baslikList.removeChild(baslikList.children[i]);
-//     }
-//   }
-// }
+removeTopicsFromView();

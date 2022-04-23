@@ -61,15 +61,16 @@ chrome.contextMenus.onClicked.addListener(({ linkUrl }, { id }) => {
 });
 
 const removeTopicFromView = (linkUrl) => {
+  const extractTopicIdFromUrl = (url) => {
+    return url.substring(url.indexOf("--") + 2).split("?")[0];
+  };
   var topicList = document.getElementsByClassName("topic-list partial")[0];
 
   for (var topic of topicList.children) {
     var topicAnchor = topic.getElementsByTagName("a")[0];
     if (topicAnchor === undefined) continue;
-    var topicId = topicAnchor.href.substring(
-      topicAnchor.href.indexOf("--") + 2
-    );
-    var topicIdToBeRemoved = linkUrl.substring(linkUrl.indexOf("--") + 2);
+    var topicId = extractTopicIdFromUrl(topicAnchor.href);
+    var topicIdToBeRemoved = extractTopicIdFromUrl(linkUrl);
     if (topicId === topicIdToBeRemoved) {
       topic.remove();
     }
