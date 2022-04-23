@@ -11,13 +11,18 @@ const removeTopicsFromView = async () => {
   var topicLiElements = topicUlElement.children;
 
   for (var i = topicLiElements.length - 1; i >= 0; i--) {
+    if (topics.length === 0) break;
     var topicEl = topicLiElements[i];
     var topicAnchor = topicEl.getElementsByTagName("a")[0];
     if (topicAnchor === undefined) continue;
     var topicElId = extracTopicIdFromAnchor(topicAnchor);
 
-    for (var topic of topics) {
-      if (topic.id === topicElId) topicUlElement.removeChild(topicEl);
+    for (var k = topics.length - 1; k >= 0; k--) {
+      var topic = topics[k];
+      if (topic.id === topicElId) {
+        topicUlElement.removeChild(topicEl);
+        topics.splice(k, 1);
+      }
     }
   }
 };
