@@ -3,24 +3,6 @@ var list = document.getElementById("eksi-baslik-gizle-list");
 const initTopics = async () => {
   var { storedTopics } = await chrome.storage.local.get("storedTopics");
   var topics = JSON.parse(storedTopics);
-  for (var topic of topics) {
-    var row = document.createElement("div");
-    row.id = topic.id;
-
-    var col1 = createACol();
-    var col2 = createACol();
-
-    var anchor = createTopicAnchor(topic);
-    col1.appendChild(anchor);
-
-    var deleteBtn = createDeleteBtn();
-    col2.appendChild(deleteBtn);
-
-    row.appendChild(col1);
-    row.appendChild(col2);
-
-    list.appendChild(row);
-  }
 
   const createTopicAnchor = (topic) => {
     var anchor = document.createElement("a");
@@ -52,6 +34,25 @@ const initTopics = async () => {
       }
     }
   };
+
+  for (var topic of topics) {
+    var row = document.createElement("div");
+    row.id = topic.id;
+
+    var col1 = createACol();
+    var col2 = createACol();
+
+    var anchor = createTopicAnchor(topic);
+    col1.appendChild(anchor);
+
+    var deleteBtn = createDeleteBtn();
+    col2.appendChild(deleteBtn);
+
+    row.appendChild(col1);
+    row.appendChild(col2);
+
+    list.appendChild(row);
+  }
 };
 
 initTopics();
